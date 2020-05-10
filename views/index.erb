@@ -1,0 +1,19 @@
+<! DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>メモ 一覧</title>
+</head>
+<body>
+<div>
+  <h1>メモ 一覧</h1>
+  <% unless @memos.size.zero? %>
+    <ul>
+      <% @memos.each do |memo| %>
+        <li><%= memo.title %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+</body>
+</html>
