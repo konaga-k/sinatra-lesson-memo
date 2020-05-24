@@ -20,7 +20,7 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  @memo = Memo.new(id: 1, title: params[:title], content: params[:content])
+  @memo = Memo.new(title: params[:title], content: params[:content])
   @memo.save
 
   @memos = [@memo]

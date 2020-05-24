@@ -3,27 +3,60 @@ require 'yaml/store'
 class Memo
   attr_accessor :id, :title, :content
 
+  class << self
+    def all
+      YAML.load_file(memo_file_path)['memos']
+    end
+
+    def find(id)
+      all.find { |memo| memo.id == id }
+    end
+  end
+
   def initialize(attributes)
     assign_attributes(attributes)
-    # yaml_storeをインスタンス変数にしないと、YAML保存時にnot in transactionエラーになる
-    @yaml_store = YAML::Store.new memo_file
   end
 
   def save
-    @yaml_store.transaction do
-      @yaml_store['memo'] = self
+    set_new_id if id.nil? # TODO: DB導入後は不要
+    yaml_store = YAML::Store.new(memo_file_path)
+
+    yaml_store.transaction do
+      # TODO: updateに対応する
+      yaml_store['memos'] = Array(yaml_store['memos']).push(self)
     end
   end
 
   def assign_attributes(attributes)
     attributes.each do |k, v|
-      public_send(:"#{k}=", v)
+      assign_attribute(k, v)
     end
   end
 
   private
 
-  def memo_file
+  def self.memo_file_path
     'data/memo.yml'
+  end
+
+  def memo_file_path
+    self.class.memo_file_path
+  end
+
+  def assign_attribute(k, v)
+    public_send(:"#{k}=", v)
+  end
+
+  def set_new_id
+    sequence_file_path = 'data/memo_sequence'
+
+    new_id = File.read(sequence_file_path).chomp.to_i
+    self.id = new_id
+
+    # TODO: saveが失敗したらこの書き込みはロールバックされないといけない
+    # 簡易アプリなので手抜き中……
+    File.open(sequence_file_path, 'w') do |f|
+      f.write(new_id + 1)
+    end
   end
 end

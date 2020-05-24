@@ -1,14 +1,6 @@
---- &1
-memo: !ruby/object:Memo
+---
+memos:
+- !ruby/object:Memo
+  title: タイトル1
+  content: '1'
   id: 1
-  title: aaa
-  content: aaaaa
-  yaml_store: !ruby/object:Psych::Store
-    opt: {}
-    filename: data/memo.yml
-    abort: false
-    ultra_safe: false
-    thread_safe: false
-    lock: !ruby/object:Thread::Mutex {}
-    rdonly: false
-    table: *1

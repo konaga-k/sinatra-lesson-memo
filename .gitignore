@@ -1,2 +1,5 @@
 # IDE
 /.idea
+
+# local data
+/data/memo_sequence
