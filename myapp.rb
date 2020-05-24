@@ -4,13 +4,8 @@ require 'sinatra'
 require "sinatra/reloader" if development?
 require './models/memo'
 
-# Memo = Struct.new(:id, :title, :content)
-
 get %r{/|/memos} do
-  @memos = []
-  (1..3).each do |n|
-    @memos << Memo.new(id: n, memo: "メモ#{n}", content: "内容#{n}")
-  end
+  @memos = Memo.all
 
   erb :index
 end
@@ -23,11 +18,12 @@ post '/memos' do
   @memo = Memo.new(title: params[:title], content: params[:content])
   @memo.save
 
-  @memos = [@memo]
+  @memos = Memo.all
   erb :index
 end
 
 get '/memos/:id' do
+  @memo = Memo.find(params[:id])
   erb :show
 end
 

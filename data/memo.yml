@@ -4,3 +4,11 @@ memos:
   title: タイトル1
   content: '1'
   id: 1
+- !ruby/object:Memo
+  title: タイトル2
+  content: '2'
+  id: 2
+- !ruby/object:Memo
+  title: タイトル3
+  content: '3'
+  id: 3

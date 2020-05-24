@@ -9,7 +9,7 @@ class Memo
     end
 
     def find(id)
-      all.find { |memo| memo.id == id }
+      all.find { |memo| memo.id.to_i == id.to_i }
     end
   end
 
@@ -18,7 +18,7 @@ class Memo
   end
 
   def save
-    set_new_id if id.nil? # TODO: DB導入後は不要
+    set_new_id if id.nil?
     yaml_store = YAML::Store.new(memo_file_path)
 
     yaml_store.transaction do
