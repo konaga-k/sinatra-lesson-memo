@@ -1,0 +1,10 @@
+{
+  "name": "sinatra-lesson-memo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "konaga <noreply@example.com>",
+  "license": "MIT",
+  "dependencies": {
+    "tailwindcss": "^1.4.6"
+  }
+}

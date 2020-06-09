@@ -4,3 +4,7 @@
 # local data
 /data/memo.yml
 /data/memo_sequence
+
+# library
+/node_modules
+# /public/css/output.css
