@@ -18,22 +18,20 @@
       </thead>
       <tbody>
         <% @memos.each do |memo| %>
-        <thead>
-          <tr>
-            <td>
-              <a href=<%= "/memos/#{memo.id}" %>><%= memo.title %></a>
-            </td>
-            <td>
-              <a href=<%= "/memos/#{memo.id}/edit" %>>編集</a>
-            </td>
-            <td>
-              <form action=<%= "/memos/#{memo.id}" %> method="post">
-                <input type="hidden" name="_method" value="delete">
-                <input type="submit" value="削除">
-              </form>
-            </td>
-          </tr>
-        </thead>
+        <tr>
+          <td>
+            <a href=<%= "/memos/#{memo.id}" %>><%= memo.title %></a>
+          </td>
+          <td>
+            <a href=<%= "/memos/#{memo.id}/edit" %>>編集</a>
+          </td>
+          <td>
+            <form action=<%= "/memos/#{memo.id}" %> method="post">
+              <input type="hidden" name="_method" value="delete">
+              <input type="submit" value="削除">
+            </form>
+          </td>
+        </tr>
         <% end %>
       </tbody>
     </table>
