@@ -5,7 +5,7 @@ class Memo
 
   class << self
     def all
-      YAML.load_file(memo_file_path)['memos']
+      YAML.load_file(memo_file_path)[resource_name]
     end
 
     def find(id)
@@ -19,11 +19,12 @@ class Memo
 
   def save
     set_new_id if id.nil?
+
     yaml_store = YAML::Store.new(memo_file_path)
 
     yaml_store.transaction do
-      # TODO: updateに対応する
-      yaml_store['memos'] = Array(yaml_store['memos']).push(self)
+      yaml_store[resource_name].delete_if { |memo| memo.id.to_i == id.to_i }
+      yaml_store[resource_name] = Array(yaml_store[resource_name]).push(self)
     end
   end
 
@@ -35,12 +36,22 @@ class Memo
 
   private
 
-  def self.memo_file_path
-    'data/memo.yml'
+  class << self
+    def memo_file_path
+      'data/memo.yml'
+    end
+
+    def resource_name
+      'memo'
+    end
   end
 
   def memo_file_path
     self.class.memo_file_path
+  end
+
+  def resource_name
+    self.class.resource_name
   end
 
   def assign_attribute(k, v)
@@ -54,7 +65,7 @@ class Memo
     self.id = new_id
 
     # TODO: saveが失敗したらこの書き込みはロールバックされないといけない
-    # 簡易アプリなので手抜き中……
+    # 簡易アプリなので手抜き中
     File.open(sequence_file_path, 'w') do |f|
       f.write(new_id + 1)
     end

@@ -6,7 +6,6 @@ require './models/memo'
 
 get %r{/|/memos} do
   @memos = Memo.all
-
   erb :index
 end
 
@@ -15,8 +14,8 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  @memo = Memo.new(title: params[:title], content: params[:content])
-  @memo.save
+  memo = Memo.new(title: params[:title], content: params[:content])
+  memo.save
 
   @memos = Memo.all
   erb :index
@@ -28,10 +27,16 @@ get '/memos/:id' do
 end
 
 get '/memos/:id/edit' do
+  @memo = Memo.find(params[:id])
   erb :edit
 end
 
-put '/memos/:id' do
+patch '/memos/:id' do
+  @memo = Memo.find(params[:id])
+  @memo.assign_attributes(title: params[:title], content: params[:content])
+  @memo.save
+
+  erb :show
 end
 
 delete '/memos/:id' do

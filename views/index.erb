@@ -8,12 +8,32 @@
 <div>
   <h1>メモ 一覧</h1>
   <% unless @memos.size.zero? %>
-    <ul>
-      <% @memos.each do |memo| %>
-        <li><%= memo.title %></li>
-      <% end %>
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @memos.each do |memo| %>
+        <thead>
+          <tr>
+            <td>
+              <a href=<%= "/memos/#{memo.id}" %>><%= memo.title %></a>
+            </td>
+            <td>
+              <a href=<%= "/memos/#{memo.id}/edit" %>>編集</a>
+            </td>
+          </tr>
+        </thead>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
+  <div>
+    <a href="/memos/new">新規作成</a>
+  </div>
 </div>
 </body>
 </html>
