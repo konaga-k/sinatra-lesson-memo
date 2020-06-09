@@ -11,11 +11,11 @@
     <input type="hidden" name="_method" value="patch">
     <div>
       <label for="title">タイトル</label>
-      <input type="text" name="title" id="title">
+      <input type="text" name="title" id="title" value=<%= "#{@memo.title}" %>>
     </div>
     <div>
       <label for="content">内容</label>
-      <input type="text" name="content" id="content">
+      <input type="text" name="content" id="content" value=<%= "#{@memo.content}" %>>
     </div>
     <div>
       <input type="submit" value="更新する">
