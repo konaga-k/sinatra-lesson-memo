@@ -1,27 +1,17 @@
-<! DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>メモ 編集</title>
-</head>
-<body>
-<div>
-  <h1>メモ 編集</h1>
-  <form action=<%= "/memos/#{@memo.id}" %> method="post">
-    <input type="hidden" name="_method" value="patch">
-    <div>
-      <label for="title">タイトル</label>
-      <input type="text" name="title" id="title" value=<%= "#{@memo.title}" %>>
-    </div>
-    <div>
-      <label for="content">内容</label>
-      <input type="text" name="content" id="content" value=<%= "#{@memo.content}" %>>
-    </div>
-    <div>
-      <input type="submit" value="更新する">
-    </div>
-  </form>
-  <a href="/memos">戻る</a>
-</div>
-</body>
-</html>
+<%- @title = 'メモ 編集' %>
+
+<form action=<%= "/memos/#{@memo.id}" %> method="post">
+  <input type="hidden" name="_method" value="patch">
+  <div>
+    <label for="title">タイトル</label>
+    <input type="text" name="title" id="title" value=<%= "#{@memo.title}" %>>
+  </div>
+  <div>
+    <label for="content">内容</label>
+    <input type="text" name="content" id="content" value=<%= "#{@memo.content}" %>>
+  </div>
+  <div>
+    <input type="submit" value="更新する">
+  </div>
+</form>
+<a href="/memos">戻る</a>

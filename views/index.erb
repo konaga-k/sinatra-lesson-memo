@@ -1,44 +1,32 @@
-<! DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>メモ 一覧</title>
-</head>
-<body>
+<%- @title = 'メモ 一覧' %>
+
+<% unless @memos.size.zero? %>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>タイトル</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @memos.each do |memo| %>
+      <tr>
+        <td><%= memo.id %></td>
+        <td><a href=<%= "/memos/#{memo.id}" %>><%= memo.title %></a></td>
+        <td><a href=<%= "/memos/#{memo.id}/edit" %>>編集</a></td>
+        <td>
+          <form action=<%= "/memos/#{memo.id}" %> method="post">
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value="削除">
+          </form>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 <div>
-  <h1>メモ 一覧</h1>
-  <% unless @memos.size.zero? %>
-    <table>
-      <thead>
-        <tr>
-          <th>タイトル</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @memos.each do |memo| %>
-        <tr>
-          <td>
-            <a href=<%= "/memos/#{memo.id}" %>><%= memo.title %></a>
-          </td>
-          <td>
-            <a href=<%= "/memos/#{memo.id}/edit" %>>編集</a>
-          </td>
-          <td>
-            <form action=<%= "/memos/#{memo.id}" %> method="post">
-              <input type="hidden" name="_method" value="delete">
-              <input type="submit" value="削除">
-            </form>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-  <div>
-    <a href="/memos/new">新規作成</a>
-  </div>
+  <a href="/memos/new">新規作成</a>
 </div>
-</body>
-</html>
