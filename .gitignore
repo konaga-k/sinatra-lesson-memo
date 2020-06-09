@@ -2,4 +2,5 @@
 /.idea
 
 # local data
+/date/memo.yml
 /data/memo_sequence
