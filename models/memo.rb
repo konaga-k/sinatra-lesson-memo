@@ -21,10 +21,16 @@ class Memo
     set_new_id if id.nil?
 
     yaml_store = YAML::Store.new(memo_file_path)
-
     yaml_store.transaction do
       yaml_store[resource_name].delete_if { |memo| memo.id.to_i == id.to_i }
       yaml_store[resource_name] = Array(yaml_store[resource_name]).push(self)
+    end
+  end
+
+  def delete
+    yaml_store = YAML::Store.new(memo_file_path)
+    yaml_store.transaction do
+      yaml_store[resource_name].delete_if { |memo| memo.id.to_i == id.to_i }
     end
   end
 

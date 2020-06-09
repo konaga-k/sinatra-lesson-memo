@@ -51,4 +51,10 @@ patch '/memos/:id' do
 end
 
 delete '/memos/:id' do
+  if @memo = Memo.find(params[:id])
+    @memo.delete
+  end
+
+  @memos = Memo.all
+  erb :index
 end
