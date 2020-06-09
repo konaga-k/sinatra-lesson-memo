@@ -22,21 +22,32 @@ post '/memos' do
 end
 
 get '/memos/:id' do
-  @memo = Memo.find(params[:id])
-  erb :show
+  if @memo = Memo.find(params[:id])
+    erb :show
+  else
+    @memos = Memo.all
+    erb :index
+  end
 end
 
 get '/memos/:id/edit' do
-  @memo = Memo.find(params[:id])
-  erb :edit
+  if @memo = Memo.find(params[:id])
+    erb :edit
+  else
+    @memos = Memo.all
+    erb :index
+  end
 end
 
 patch '/memos/:id' do
-  @memo = Memo.find(params[:id])
-  @memo.assign_attributes(title: params[:title], content: params[:content])
-  @memo.save
-
-  erb :show
+  if @memo = Memo.find(params[:id])
+    @memo.assign_attributes(title: params[:title], content: params[:content])
+    @memo.save
+    erb :show
+  else
+    @memos = Memo.all
+    erb :index
+  end
 end
 
 delete '/memos/:id' do
