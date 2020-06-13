@@ -1,5 +1,7 @@
 # sinatra-lesson-memo
+Sinatraの学習用に作成したメモアプリです。
+
 ## setup
-1. `$ yarn install`を実行してください
-1. `/data` 配下の`memo.yml.sample`、`memo_sequence.sample`のファイル名を変更して、`.sample`を外してください
-1. `$ ruby myapp.rb`を実行するとアプリケーションが立ち上がります
+1. `$ sh setup.sh` を実行してください
+1. `$ ruby myapp.rb` を実行してください
+1. `http://localhost:4567/` にアクセスするとメモアプリが利用できます
