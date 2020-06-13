@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml/store'
 
 class Memo
@@ -64,8 +66,8 @@ class Memo
     self.class.resource_name
   end
 
-  def assign_attribute(k, v)
-    public_send(:"#{k}=", v)
+  def assign_attribute(key, value)
+    public_send(:"#{key}=", value)
   end
 
   def set_new_id

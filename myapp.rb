@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'sinatra'
-require "sinatra/reloader" if development?
+require 'sinatra/reloader' if development?
 require './models/memo'
 
 get %r{/|/memos} do
@@ -21,35 +21,31 @@ post '/memos' do
 end
 
 get '/memos/:id' do
-  if @memo = Memo.find(params[:id])
-    erb :show
-  else
-    redirect to('/memos')
-  end
+  @memo = Memo.find(params[:id])
+  redirect to('/memos') if @memo.nil?
+
+  erb :show
 end
 
 get '/memos/:id/edit' do
-  if @memo = Memo.find(params[:id])
-    erb :edit
-  else
-    redirect to('/memos')
-  end
+  @memo = Memo.find(params[:id])
+  redirect to('/memos') if @memo.nil?
+
+  erb :edit
 end
 
 patch '/memos/:id' do
-  if @memo = Memo.find(params[:id])
-    @memo.assign_attributes(title: params[:title], content: params[:content])
-    @memo.save
-    erb :show
-  else
-    redirect to('/memos')
-  end
+  @memo = Memo.find(params[:id])
+  redirect to('/memos') if @memo.nil?
+
+  @memo.assign_attributes(title: params[:title], content: params[:content])
+  @memo.save
+  erb :show
 end
 
 delete '/memos/:id' do
-  if @memo = Memo.find(params[:id])
-    @memo.delete
-  end
+  @memo = Memo.find(params[:id])
+  @memo&.delete
 
   redirect to('/memos')
 end
