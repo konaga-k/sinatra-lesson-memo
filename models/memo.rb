@@ -5,7 +5,10 @@ class Memo
 
   class << self
     def all(ordered: false)
-      memos = YAML.load_file(memo_file_path)[resource_name]
+      yaml_data = YAML.load_file(memo_file_path)
+      return [] unless yaml_data
+
+      memos = yaml_data[resource_name]
       memos.sort_by(&:id) if ordered
     end
 
@@ -23,7 +26,7 @@ class Memo
 
     yaml_store = YAML::Store.new(memo_file_path)
     yaml_store.transaction do
-      yaml_store[resource_name].delete_if { |memo| memo.id.to_i == id.to_i }
+      yaml_store[resource_name]&.delete_if { |memo| memo.id.to_i == id.to_i }
       yaml_store[resource_name] = Array(yaml_store[resource_name]).push(self)
     end
   end
@@ -31,7 +34,7 @@ class Memo
   def delete
     yaml_store = YAML::Store.new(memo_file_path)
     yaml_store.transaction do
-      yaml_store[resource_name].delete_if { |memo| memo.id.to_i == id.to_i }
+      yaml_store[resource_name]&.delete_if { |memo| memo.id.to_i == id.to_i }
     end
   end
 
