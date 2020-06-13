@@ -9,7 +9,7 @@ class Memo
       return [] unless yaml_data
 
       memos = yaml_data[resource_name]
-      memos.sort_by(&:id) if ordered
+      ordered ? memos.sort_by(&:id) : memos
     end
 
     def find(id)
