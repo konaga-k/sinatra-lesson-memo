@@ -5,7 +5,7 @@ require "sinatra/reloader" if development?
 require './models/memo'
 
 get %r{/|/memos} do
-  @memos = Memo.all
+  @memos = Memo.all(ordered: true)
   erb :index
 end
 

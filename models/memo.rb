@@ -4,8 +4,9 @@ class Memo
   attr_accessor :id, :title, :content
 
   class << self
-    def all
-      YAML.load_file(memo_file_path)[resource_name]
+    def all(ordered: false)
+      memos = YAML.load_file(memo_file_path)[resource_name]
+      memos.sort_by(&:id) if ordered
     end
 
     def find(id)
