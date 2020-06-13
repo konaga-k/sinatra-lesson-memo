@@ -17,16 +17,14 @@ post '/memos' do
   memo = Memo.new(title: params[:title], content: params[:content])
   memo.save
 
-  @memos = Memo.all
-  erb :index
+  redirect to('/memos')
 end
 
 get '/memos/:id' do
   if @memo = Memo.find(params[:id])
     erb :show
   else
-    @memos = Memo.all
-    erb :index
+    redirect to('/memos')
   end
 end
 
@@ -34,8 +32,7 @@ get '/memos/:id/edit' do
   if @memo = Memo.find(params[:id])
     erb :edit
   else
-    @memos = Memo.all
-    erb :index
+    redirect to('/memos')
   end
 end
 
@@ -45,8 +42,7 @@ patch '/memos/:id' do
     @memo.save
     erb :show
   else
-    @memos = Memo.all
-    erb :index
+    redirect to('/memos')
   end
 end
 
@@ -55,6 +51,5 @@ delete '/memos/:id' do
     @memo.delete
   end
 
-  @memos = Memo.all
-  erb :index
+  redirect to('/memos')
 end
