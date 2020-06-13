@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title><%= @title %></title>
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <link rel="stylesheet" href="/css/output.css">
 </head>
-<body>
-<div>
-  <h1><%= @title %></h1>
 
-  <%= yield %>
-</div>
+<body>
+  <div class="h-screen bg-gray-300">
+    <div class="container h-screen px-4 pt-8 py-24 mx-auto bg-white">
+      <h1 class="mb-4 text-xl font-bold"><%= @title %></h1>
+      <%= yield %>
+    </div>
+  </div>
 </body>
 </html>

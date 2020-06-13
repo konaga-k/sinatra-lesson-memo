@@ -1,11 +1,12 @@
 <%- @title = 'メモ 一覧' %>
 
+<!--TODO: borderが表示されない-->
 <% unless @memos.size.zero? %>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>タイトル</th>
+  <table class="table-auto mb-6">
+    <thead class="font-normal">
+      <tr class="bg-gray-200 font-medium rounded-tl rounded-bl">
+        <th class="px-4 py-2">ID</th>
+        <th class="px-4 py-2">タイトル</th>
         <th></th>
         <th></th>
       </tr>
@@ -13,13 +14,15 @@
     <tbody>
       <% @memos.each do |memo| %>
       <tr>
-        <td><%= memo.id %></td>
-        <td><a href=<%= "/memos/#{memo.id}" %>><%= memo.title %></a></td>
-        <td><a href=<%= "/memos/#{memo.id}/edit" %>>編集</a></td>
-        <td>
+        <td class="px-4 py-2 border-t-2"><%= memo.id %></td>
+        <td class="px-4 py-2 border-t-2"><a href=<%= "/memos/#{memo.id}" %> class="text-blue-500"><%= memo.title %></a></td>
+        <td class="px-4 py-2 border-t-2">
+          <a href=<%= "/memos/#{memo.id}/edit" %> class="text-blue-500">編集</a>
+        </td>
+        <td class="px-4 py-2 border-t-2">
           <form action=<%= "/memos/#{memo.id}" %> method="post">
             <input type="hidden" name="_method" value="delete">
-            <input type="submit" value="削除">
+            <input type="submit" value="削除" class="text-blue-500">
           </form>
         </td>
       </tr>
@@ -28,5 +31,5 @@
   </table>
 <% end %>
 <div>
-  <a href="/memos/new">新規作成</a>
+  <a href="/memos/new" class="text-blue-500">新規作成</a>
 </div>
