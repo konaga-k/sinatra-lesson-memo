@@ -1,6 +1,3 @@
-# IDE
-/.idea
-
 # local data
 /data/memo.yml
 /data/memo_sequence
