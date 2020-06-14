@@ -1,21 +1,22 @@
 # frozen_string_literal: true
 
 require 'yaml/store'
+require 'pg'
+require_relative 'connection'
 
 class Memo
   attr_accessor :id, :title, :content
 
   class << self
     def all(ordered: false)
-      yaml_data = YAML.load_file(memo_file_path)
-      return [] unless yaml_data
-
-      memos = yaml_data[resource_name]
-      ordered ? memos.sort_by(&:id) : memos
+      sql = ordered ? 'SELECT * FROM memos' : 'SELECT * FROM memos ORDER BY id'
+      result = connection.exec(sql)
+      result.map { |row| new(id: row['id'], title: row['title'], content: row['content']) }
     end
 
     def find(id)
-      all.find { |memo| memo.id.to_i == id.to_i }
+      result = connection.exec_params('SELECT * FROM memos WHERE id = $1', [id])
+      result.map { |row| new(id: id, title: row['title'], content: row['content']) }.first
     end
   end
 
@@ -23,21 +24,16 @@ class Memo
     assign_attributes(attributes)
   end
 
-  def save
-    set_new_id if id.nil?
+  def create
+    connection.exec_params('INSERT INTO memos (title, content) VALUES ($1, $2)', [title, content])
+  end
 
-    yaml_store = YAML::Store.new(memo_file_path)
-    yaml_store.transaction do
-      yaml_store[resource_name]&.delete_if { |memo| memo.id.to_i == id.to_i }
-      yaml_store[resource_name] = Array(yaml_store[resource_name]).push(self)
-    end
+  def update
+    connection.exec_params('UPDATE memos SET title = $1, content = $2 WHERE id = $3', [title, content, id])
   end
 
   def delete
-    yaml_store = YAML::Store.new(memo_file_path)
-    yaml_store.transaction do
-      yaml_store[resource_name]&.delete_if { |memo| memo.id.to_i == id.to_i }
-    end
+    connection.exec_params('DELETE FROM memos WHERE id = $1', [id])
   end
 
   def assign_attributes(attributes)
@@ -56,30 +52,19 @@ class Memo
     def resource_name
       'memo'
     end
+
+    def connection
+      Connection.resource
+    end
   end
 
-  def memo_file_path
-    self.class.memo_file_path
-  end
-
-  def resource_name
-    self.class.resource_name
+  %w[memo_file_path resource_name connection].each do |name|
+    define_method(name) do
+      self.class.send(name)
+    end
   end
 
   def assign_attribute(key, value)
     public_send(:"#{key}=", value)
-  end
-
-  def set_new_id
-    sequence_file_path = 'data/memo_sequence'
-
-    new_id = File.read(sequence_file_path).chomp.to_i
-    self.id = new_id
-
-    # TODO: saveが失敗したらこの書き込みはロールバックされないといけない
-    # 簡易アプリなので手抜き中
-    File.open(sequence_file_path, 'w') do |f|
-      f.write(new_id + 1)
-    end
   end
 end
