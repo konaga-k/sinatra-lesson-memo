@@ -2,7 +2,7 @@
 
 require 'sinatra'
 require 'sinatra/reloader' if development?
-require './models/memo'
+require_relative './models/memo'
 
 get %r{/|/memos} do
   @memos = Memo.all(ordered: true)
