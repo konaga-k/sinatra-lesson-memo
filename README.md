@@ -4,7 +4,7 @@ Sinatraの学習用に作成したメモアプリです。
 ## requirement
 - Ruby: 2.7.1
 - Yarn: 1.22.4
-- PoetgreSQL: 11.6
+- PostgreSQL: 11.6
 
 ※これ以下のバージョンでも動くとは思います
 
