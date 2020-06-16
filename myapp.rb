@@ -15,7 +15,7 @@ end
 
 post '/memos' do
   memo = Memo.new(title: params[:title], content: params[:content])
-  memo.save
+  memo.create
 
   redirect to('/memos')
 end
@@ -39,13 +39,13 @@ patch '/memos/:id' do
   redirect to('/memos') if @memo.nil?
 
   @memo.assign_attributes(title: params[:title], content: params[:content])
-  @memo.save
+  @memo.update
   erb :show
 end
 
 delete '/memos/:id' do
   @memo = Memo.find(params[:id])
-  @memo&.delete
+  @memo.delete
 
   redirect to('/memos')
 end
