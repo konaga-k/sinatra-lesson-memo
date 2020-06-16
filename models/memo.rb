@@ -9,7 +9,7 @@ class Memo
 
   class << self
     def all(ordered: false)
-      sql = ordered ? 'SELECT * FROM memos' : 'SELECT * FROM memos ORDER BY id'
+      sql = ordered ? 'SELECT * FROM memos ORDER BY id' : 'SELECT * FROM memos'
       result = connection.exec(sql)
       result.map { |row| new(id: row['id'], title: row['title'], content: row['content']) }
     end
