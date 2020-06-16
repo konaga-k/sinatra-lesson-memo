@@ -22,6 +22,6 @@ $ psql -U root -d sinatra_lesson_memo_development
 ```
 
 ### 実行
-1. `$ sh setup.sh` を実行してください（初回のみ）
+1. `$ sh setup.sh` を実行してください（初回のみ） ※DBのロールやパスワードを変更した場合は、合わせて`.env`を編集してください
 1. `$ ruby myapp.rb` を実行してください
 1. `http://localhost:4567/` にアクセスするとメモアプリが利用できます
